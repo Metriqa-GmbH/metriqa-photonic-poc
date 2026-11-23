@@ -38,6 +38,10 @@ class TrainResult:
     val_metrics: dict[str, float]
     history: list[dict[str, float]] = field(default_factory=list)
 
+    @property
+    def best_val_loss(self) -> float:
+        return min(h["val_loss"] for h in self.history)
+
 
 def train_model(
     name: str,
@@ -50,7 +54,7 @@ def train_model(
     """Train with Adam on BCE-with-logits; keep the epoch with the lowest validation loss."""
     torch.manual_seed(config.seed)
     model = build_model(name, x_train.shape[1])
-    lr = config.learning_rate or DEFAULT_LEARNING_RATE[name]
+    lr = config.learning_rate or DEFAULT_LEARNING_RATE.get(name, 3e-3)
     optimiser = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=config.weight_decay)
     loss_fn = nn.BCEWithLogitsLoss()
     xt, yt = torch.from_numpy(x_train), torch.from_numpy(y_train)

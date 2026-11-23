@@ -39,7 +39,10 @@ future device generations.
 
 "NPU" means the toolkit calls the driver (on the simulator: the CPU backend). "Host" means the
 toolkit computes it itself in Rust, in bf16, **even when hardware is attached** (*source*:
-those functions only validate the device ID and never call the driver).
+those functions only validate the device ID and never call the driver; the Rust doc comments say
+"not dispatched to any NPU", the Python docstrings do not). A maintainer confirmed it publicly
+(toolkit discussion #11): "only the matrix multiplications run on the card", and "the PCIe bus is
+currently the bottleneck".
 
 | Python call | Runs on | Notes |
 |---|---|---|
@@ -48,7 +51,7 @@ those functions only validate the device ID and never call the driver).
 | `native.mul_elementwise` | NPU (`Mul`) | |
 | `native.calc_scaled_periodic_nl_fprop` | NPU (`NonLin`) | `tcos(u) * v`; on hardware `tcos` is a cosine-like optical response |
 | `ai.calc_kan_layer_fprop` | hybrid | `k*x` on NPU (`Mul`), `+phi` on host, `tcos * a` on NPU (`NonLin`), sum over inputs and frequencies on host **in bf16** |
-| `ai.conv_fprop`, `ai.conv_transpose_fprop` (+ preloaded variants) | hybrid | im2row on host, matrix product on NPU; `dilation != 1` raises "not implemented yet" (*verified*) |
+| `ai.conv_fprop`, `ai.conv_transpose_fprop` (+ preloaded variants) | hybrid | im2row on host, matrix product on NPU; `dilation != 1` and (transpose) `output_padding != 0` raise "not implemented yet" although the Python API accepts and documents them (*verified*) |
 | `ai.batchnorm2d_fprop` | hybrid | normalisation on host, scale via NPU `mul` |
 | `native.dft` | NPU (`Dft`, Gen2p) | unnormalised, last axis |
 | `ai.add_bias_fprop` | host | |
@@ -98,6 +101,24 @@ Because this summation is host code in the toolkit, it applies to hardware runs 
 in float32 (as the matrix-vector path already does) would remove it. In a stacked Fourier
 network the error is amplified downstream: the next layer multiplies its input by frequencies up
 to `k = grid_size`, so a hidden-layer error `e` shifts the cosine argument by up to `k * e`.
+
+## Workaround: execute KAN layers as a Fourier basis plus one matrix product
+
+`a·cos(kx + φ) = (a cos φ)·cos(kx) − (a sin φ)·sin(kx)` turns a KAN layer into 2·n_in·n_k basis
+evaluations (`calc_scaled_periodic_nl_fprop`, independent of the output width) followed by one
+preloaded `linear_fprop` with float32 accumulation. `HybridOptions(kan_impl="factorized")` implements
+it; on trained models it is more accurate than PyTorch bf16 and puts 95–97% of the layer's operations
+on the NPU (research report, §5–6). The identity assumes an exact cosine; with a hardware `tcos` the
+two forms differ and a model should be trained against the form that is executed.
+
+## Public hardware information (vendor claims)
+
+Gen 2: thin-film lithium niobate photonic processor on a PCIe card in a rack server ("Native
+Processing Server"); quoted at 8 GOPS (operations "more complex than multiply-accumulates"), about
+150 W and 8 parallel channels; "up to 30x lower energy use and 50x higher performance" for selected
+workloads (EE Times 2025-11-26, Quantum Insider 2025-11-19). Gen 2+ adds optical DFT (shown at SC26).
+No public paper reports precision or noise. Q.ANT and IONOS run a free Gen 2 pilot on bare-metal
+servers for partners with a concrete use case.
 
 ## Hardware-only questions
 

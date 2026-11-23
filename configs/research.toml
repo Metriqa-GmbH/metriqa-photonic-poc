@@ -1,0 +1,52 @@
+# Configuration of the three research experiments (photonic-poc research --config ...).
+# Every number in docs/research-report.md comes from a run with this file.
+
+[dataset]
+n_entities = 15000
+seed = 7
+train_fraction = 0.6
+val_fraction = 0.1
+
+[training]
+epochs = 60
+learning_rates = [1e-3, 3e-3, 1e-2, 3e-2] # selected per architecture on validation loss, seed 0
+seeds = [0, 1, 2, 3, 4]
+workers = 14
+
+[architecture]
+logreg = ["logreg"]
+mlp = ["mlp-2", "mlp-4", "mlp-8", "mlp-16", "mlp-32", "mlp-64",
+       "mlp-8x8", "mlp-16x8", "mlp-32x16", "mlp-64x32"]
+cos = ["cos-2", "cos-4", "cos-8", "cos-16", "cos-32", "cos-64", "cos-16x8", "cos-32x16"]
+kan = ["kan-1-g1", "kan-1-g2", "kan-1-g4", "kan-1-g8",
+       "kan-2-g1", "kan-2-g2", "kan-2-g4", "kan-2-g8",
+       "kan-4-g1", "kan-4-g2", "kan-4-g4", "kan-4-g8",
+       "kan-8-g1", "kan-8-g2", "kan-8-g4", "kan-8-g8"]
+bootstrap = 2000
+compact_tolerance = 0.005 # "compact champion": smallest model within this val-F1 of the best
+
+[robustness]
+depth_mlp = ["mlp-16", "mlp-16x16", "mlp-16x16x16", "mlp-16x16x16x16", "mlp-16x16x16x16x16x16"]
+depth_cos = ["cos-16", "cos-16x16", "cos-16x16x16", "cos-16x16x16x16"]
+depth_kan = ["kan-4-g4", "kan-4x4-g4", "kan-4x4x4-g4"]
+precision_targets = [0.99, 0.995, 0.999]
+noise_std = [0.0, 0.01, 0.02, 0.05, 0.1, 0.2]
+noise_seeds = 5
+tcos_distortion = [0.0, 0.01, 0.02, 0.05, 0.1]
+uniform_samples = 20000
+boundary_samples = 20000
+
+[hybrid]
+batch_sizes = [1, 16, 256, 4096]
+repeats = 7
+layer_widths = [16, 64, 256, 1024, 4096]
+feature_pairs = 2000
+# Analytical scenarios. NONE of these are measurements. call_overhead_us: per NPU call (driver,
+# PCIe round trip); bandwidth_gbs: effective host<->NPU bandwidth; npu_ops_per_s: sustained NPU
+# rate. 8e9 is the vendor-reported Gen 2 figure (8 GOPS, EE Times 2025-11-26), whose
+# definition of an operation is not public.
+scenarios = [
+  { name = "pessimistic", call_overhead_us = 50.0, bandwidth_gbs = 4.0, npu_ops_per_s = 8e9 },
+  { name = "vendor-gen2", call_overhead_us = 10.0, bandwidth_gbs = 16.0, npu_ops_per_s = 8e9 },
+  { name = "future-10x", call_overhead_us = 2.0, bandwidth_gbs = 32.0, npu_ops_per_s = 8e10 },
+]

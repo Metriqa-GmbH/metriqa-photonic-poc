@@ -16,12 +16,12 @@ import numpy as np
 import torch
 from torch import nn
 
-from photonic_poc.models import FourierKAN
+from photonic_poc.models import Cos, FourierKAN, Periodic, set_periodic
 
 BACKEND_NAMES = ("torch-fp32", "torch-bf16", "qant")
 
 # Layers that would run on the NPU's optical path; noise is injected at their outputs.
-NPU_LAYER_TYPES: tuple[type[nn.Module], ...] = (nn.Linear, FourierKAN)
+NPU_LAYER_TYPES: tuple[type[nn.Module], ...] = (nn.Linear, FourierKAN, Cos)
 
 
 class InferenceBackend(Protocol):
@@ -35,10 +35,15 @@ class InferenceBackend(Protocol):
 class TorchBackend:
     """Plain PyTorch inference in float32 (the reference) or bfloat16 (the precision control)."""
 
-    def __init__(self, model: nn.Module, dtype: torch.dtype = torch.float32) -> None:
+    def __init__(
+        self, model: nn.Module, dtype: torch.dtype = torch.float32, periodic: Periodic | None = None
+    ) -> None:
         self.dtype = dtype
         self.name = "torch-fp32" if dtype == torch.float32 else "torch-bf16"
         self.model = copy.deepcopy(model).to(dtype).eval()
+        if periodic is not None:  # e.g. a distorted cosine standing in for the hardware tcos
+            set_periodic(self.model, periodic)
+            self.name += "-periodic"
 
     @torch.no_grad()
     def predict_logits(self, features: np.ndarray) -> np.ndarray:

@@ -117,6 +117,32 @@ def cmd_seed_study(args: argparse.Namespace) -> None:
     print(f"wrote {args.results / 'seed_study.json'}")
 
 
+def cmd_research(args: argparse.Namespace) -> None:
+    """Run the research experiments (A, B, C) from a TOML config, then render the figures."""
+    from photonic_poc.experiments import architecture, hybrid_cost, robustness
+    from photonic_poc.experiments.config import load_config
+    from photonic_poc.figures import render_figures
+
+    cfg = load_config(args.config)
+    steps = {
+        "architecture": architecture.run,
+        "robustness": robustness.run,
+        "hybrid": hybrid_cost.run,
+    }
+    for name in args.only or list(steps):
+        print(f"== experiment {name}")
+        steps[name](cfg, args.out)
+    for path in render_figures(args.out, args.out / "figures"):
+        print(f"wrote {path}")
+
+
+def cmd_figures(args: argparse.Namespace) -> None:
+    from photonic_poc.figures import render_figures
+
+    for path in render_figures(args.out, args.out / "figures"):
+        print(f"wrote {path}")
+
+
 def cmd_report(args: argparse.Namespace) -> None:
     (args.results / "RESULTS.md").write_text(render_results(args.results), encoding="utf-8")
     print(f"wrote {args.results / 'RESULTS.md'}")
@@ -193,6 +219,15 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--train-noise", type=float, default=0.05)
     p.add_argument("--no-qant", action="store_true")
     add("report", cmd_report, "render RESULTS.md from the JSON results")
+    p = add("research", cmd_research, "run the research experiments (see configs/research.toml)")
+    p.add_argument("--config", type=Path, default=Path("configs/research.toml"))
+    p.add_argument("--only", nargs="+", choices=["architecture", "robustness", "hybrid"])
+    p.add_argument("--out", type=Path, default=Path("results/research"))
+    p = add("figures", cmd_figures, "render the research figures from results/research")
+    p.add_argument("--out", type=Path, default=Path("results/research"))
+    from photonic_poc.private_eval import register_cli
+
+    register_cli(sub)
     p = add("reproduce", cmd_reproduce, "run the whole pipeline")
     p.add_argument("--entities", type=int, default=GeneratorConfig.n_entities)
     p.add_argument("--epochs", type=int, default=TrainConfig.epochs)

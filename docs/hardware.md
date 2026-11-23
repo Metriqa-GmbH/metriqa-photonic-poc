@@ -11,21 +11,24 @@ hardware run and which experiments need one.
 3. Check the device: `uv run photonic-poc sdk-info`. `qant_driver` must no longer read
    `cpu-backend`, and at least one NPU must list `Mul` and `NonLin`.
 
-No code changes are needed. `QantBackend` uses `device_id=-1` (first NPU that supports the
-operation), preloads weights only when an NPU reports `MemHandling`, and records the driver string
-and device list in every report. Reports flag `"simulated": true` when the driver is the CPU
+No code changes are needed. `QantBackend` and `HybridExecutor` use `device_id=-1` (the first NPU
+that supports the operation) and preload weights only when an NPU reports `MemHandling`; every
+report records the driver string and device list. Reports flag `"simulated": true` when the driver is the CPU
 backend, so simulator and hardware results cannot be confused.
 
 ## Experiments that need hardware
 
-| Question | How to run it | Why the simulator cannot answer |
+The research report specifies five experiments with hypotheses, measurements and success criteria
+([§9](research-report.md#9-why-physical-qant-npu-access-is-necessary)); the
+[pilot plan](pilot-plan.md) schedules them. In short:
+
+| | Experiment | Command |
 |---|---|---|
-| Matching quality on the NPU | `photonic-poc evaluate --backends torch-fp32 qant` | real `tcos` shape, analog noise and encoding limits are not simulated |
-| Agreement with float32 (logit error, decision flips) | same; see `agreement_vs_fp32` | the simulator is a noise-free bf16 emulation |
-| Does noise-aware training help? | compare `mlp` vs `mlp-noise0.05` and `fourier` vs `fourier-noise0.05` on `qant` | our noise model is an assumption |
-| Operation-level error vs fan-in | `photonic-poc op-numerics` | analog accumulation error is unknown |
-| Latency and throughput | `photonic-poc evaluate` latency columns, plus `info.get_perf_counter` | simulator timings measure CPU emulation |
-| Energy per inference | external power measurement; not implemented here | no model of power exists in the toolkit |
+| H1 | error model of the NPU primitives, measured `tcos` | `photonic-poc op-numerics` (+ repeated calls) |
+| H2 | decision stability of trained models | `photonic-poc research --only robustness` |
+| H3 | latency, transfer, batch and multi-NPU scaling | `photonic-poc research --only hybrid` + `info.get_perf_counter` |
+| H4 | energy per inference | external power measurement during H3 runs |
+| H5 | 8-hour stability across recalibration | repeated `robustness` runs + `info.get_sensor_info` |
 
 ## Things to watch
 

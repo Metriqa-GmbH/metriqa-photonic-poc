@@ -1,0 +1,41 @@
+# Tiny configuration for CI smoke tests of the research pipeline. Results are meaningless.
+
+[dataset]
+n_entities = 600
+seed = 7
+train_fraction = 0.6
+val_fraction = 0.2
+
+[training]
+epochs = 3
+learning_rates = [3e-3, 3e-2]
+seeds = [0, 1]
+workers = 1
+
+[architecture]
+logreg = ["logreg"]
+mlp = ["mlp-4", "mlp-8x4"]
+cos = ["cos-4"]
+kan = ["kan-1-g2", "kan-2-g2"]
+bootstrap = 50
+compact_tolerance = 0.05
+
+[robustness]
+depth_mlp = ["mlp-4", "mlp-4x4"]
+depth_cos = ["cos-4"]
+depth_kan = ["kan-2-g2"]
+precision_targets = [0.9, 0.99]
+noise_std = [0.0, 0.1]
+noise_seeds = 2
+tcos_distortion = [0.0, 0.1]
+uniform_samples = 500
+boundary_samples = 500
+
+[hybrid]
+batch_sizes = [1, 64]
+repeats = 1
+layer_widths = [16, 64]
+feature_pairs = 50
+scenarios = [
+  { name = "pessimistic", call_overhead_us = 50.0, bandwidth_gbs = 4.0, npu_ops_per_s = 8e9 },
+]
