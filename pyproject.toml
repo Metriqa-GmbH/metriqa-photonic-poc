@@ -1,0 +1,68 @@
+[project]
+name = "metriqa-photonic-poc"
+version = "0.1.0"
+description = "Compact entity-matching networks executed with the Q.ANT Native Computing Toolkit (simulator-first, hardware-ready)."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Metriqa GmbH" }]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# The Q.ANT toolkit is not on PyPI. `scripts/install_qant_sdk.py` installs the
+# official release wheel (pinned version and SHA-256) into the active environment.
+dependencies = [
+  "numpy>=1.26",
+  "ml-dtypes>=0.6.0",
+  "torch>=2.4",
+]
+
+[project.scripts]
+photonic-poc = "photonic_poc.cli:main"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.13",
+  "pytest>=8.3",
+  "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/photonic_poc"]
+
+# CPU-only PyTorch: the default PyPI wheel on Linux/Windows bundles CUDA (several GB).
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "NPY", "RUF"]
+allowed-confusables = ["σ", "µ", "Δ", "×"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+files = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["qant: needs the Q.ANT toolkit (skipped when absent unless REQUIRE_QANT=1)"]

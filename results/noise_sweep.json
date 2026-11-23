@@ -1,0 +1,212 @@
+[
+  {
+    "model": "logreg",
+    "noise_std": 0.0,
+    "f1_mean": 0.9130913091309131,
+    "f1_std": 0.0,
+    "seeds": 1
+  },
+  {
+    "model": "logreg",
+    "noise_std": 0.01,
+    "f1_mean": 0.9133875030961344,
+    "f1_std": 0.0005683683301143195,
+    "seeds": 5
+  },
+  {
+    "model": "logreg",
+    "noise_std": 0.02,
+    "f1_mean": 0.9132684488478569,
+    "f1_std": 0.0009117359106663572,
+    "seeds": 5
+  },
+  {
+    "model": "logreg",
+    "noise_std": 0.05,
+    "f1_mean": 0.9126288266857909,
+    "f1_std": 0.0009419060777163231,
+    "seeds": 5
+  },
+  {
+    "model": "logreg",
+    "noise_std": 0.1,
+    "f1_mean": 0.9123078024499683,
+    "f1_std": 0.0005418712512227223,
+    "seeds": 5
+  },
+  {
+    "model": "logreg",
+    "noise_std": 0.2,
+    "f1_mean": 0.9119909753832351,
+    "f1_std": 0.001354662031020096,
+    "seeds": 5
+  },
+  {
+    "model": "mlp",
+    "noise_std": 0.0,
+    "f1_mean": 0.9571508069003895,
+    "f1_std": 0.0,
+    "seeds": 1
+  },
+  {
+    "model": "mlp",
+    "noise_std": 0.01,
+    "f1_mean": 0.9567146528879119,
+    "f1_std": 0.0015257049310125202,
+    "seeds": 5
+  },
+  {
+    "model": "mlp",
+    "noise_std": 0.02,
+    "f1_mean": 0.9559110087619981,
+    "f1_std": 0.0021674642824869874,
+    "seeds": 5
+  },
+  {
+    "model": "mlp",
+    "noise_std": 0.05,
+    "f1_mean": 0.9526691575700934,
+    "f1_std": 0.002454837377572327,
+    "seeds": 5
+  },
+  {
+    "model": "mlp",
+    "noise_std": 0.1,
+    "f1_mean": 0.9492613954031915,
+    "f1_std": 0.00264957643391946,
+    "seeds": 5
+  },
+  {
+    "model": "mlp",
+    "noise_std": 0.2,
+    "f1_mean": 0.9385303129788978,
+    "f1_std": 0.002586941132141359,
+    "seeds": 5
+  },
+  {
+    "model": "mlp-noise0.05",
+    "noise_std": 0.0,
+    "f1_mean": 0.954874651810585,
+    "f1_std": 0.0,
+    "seeds": 1
+  },
+  {
+    "model": "mlp-noise0.05",
+    "noise_std": 0.01,
+    "f1_mean": 0.9552037931800925,
+    "f1_std": 0.000576739808291009,
+    "seeds": 5
+  },
+  {
+    "model": "mlp-noise0.05",
+    "noise_std": 0.02,
+    "f1_mean": 0.9550972392121253,
+    "f1_std": 0.001043963923358459,
+    "seeds": 5
+  },
+  {
+    "model": "mlp-noise0.05",
+    "noise_std": 0.05,
+    "f1_mean": 0.9523806444122694,
+    "f1_std": 0.0013115221578073953,
+    "seeds": 5
+  },
+  {
+    "model": "mlp-noise0.05",
+    "noise_std": 0.1,
+    "f1_mean": 0.9486158150195838,
+    "f1_std": 0.0025514830093005393,
+    "seeds": 5
+  },
+  {
+    "model": "mlp-noise0.05",
+    "noise_std": 0.2,
+    "f1_mean": 0.9396886994940699,
+    "f1_std": 0.003462417370790556,
+    "seeds": 5
+  },
+  {
+    "model": "fourier",
+    "noise_std": 0.0,
+    "f1_mean": 0.949671772428884,
+    "f1_std": 0.0,
+    "seeds": 1
+  },
+  {
+    "model": "fourier",
+    "noise_std": 0.01,
+    "f1_mean": 0.9497045354746764,
+    "f1_std": 0.0007093627744920426,
+    "seeds": 5
+  },
+  {
+    "model": "fourier",
+    "noise_std": 0.02,
+    "f1_mean": 0.9504157599267712,
+    "f1_std": 0.001022918709229468,
+    "seeds": 5
+  },
+  {
+    "model": "fourier",
+    "noise_std": 0.05,
+    "f1_mean": 0.94999937364564,
+    "f1_std": 0.0017983454503511785,
+    "seeds": 5
+  },
+  {
+    "model": "fourier",
+    "noise_std": 0.1,
+    "f1_mean": 0.9451689141460458,
+    "f1_std": 0.0016810904885759894,
+    "seeds": 5
+  },
+  {
+    "model": "fourier",
+    "noise_std": 0.2,
+    "f1_mean": 0.9168260438145166,
+    "f1_std": 0.0026605478225950174,
+    "seeds": 5
+  },
+  {
+    "model": "fourier-noise0.05",
+    "noise_std": 0.0,
+    "f1_mean": 0.9532195927352779,
+    "f1_std": 0.0,
+    "seeds": 1
+  },
+  {
+    "model": "fourier-noise0.05",
+    "noise_std": 0.01,
+    "f1_mean": 0.9544451363070893,
+    "f1_std": 0.0005617926113801369,
+    "seeds": 5
+  },
+  {
+    "model": "fourier-noise0.05",
+    "noise_std": 0.02,
+    "f1_mean": 0.9544751452200151,
+    "f1_std": 0.0011864688903824461,
+    "seeds": 5
+  },
+  {
+    "model": "fourier-noise0.05",
+    "noise_std": 0.05,
+    "f1_mean": 0.9542258347349684,
+    "f1_std": 0.0010449896944309646,
+    "seeds": 5
+  },
+  {
+    "model": "fourier-noise0.05",
+    "noise_std": 0.1,
+    "f1_mean": 0.9495837214219092,
+    "f1_std": 0.002533401161589983,
+    "seeds": 5
+  },
+  {
+    "model": "fourier-noise0.05",
+    "noise_std": 0.2,
+    "f1_mean": 0.9316267893322948,
+    "f1_std": 0.005281033183528753,
+    "seeds": 5
+  }
+]

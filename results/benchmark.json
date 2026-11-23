@@ -1,0 +1,615 @@
+{
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 26 Model 96 Stepping 0, AuthenticAMD",
+    "torch": "2.15.0+cpu",
+    "numpy": "2.5.5",
+    "qant_toolkit": "2.5.0",
+    "qant_driver": "cpu-backend;commit:none;"
+  },
+  "backends": {
+    "torch-fp32": {
+      "backend": "torch-fp32",
+      "torch": "2.15.0+cpu",
+      "dtype": "torch.float32"
+    },
+    "torch-bf16": {
+      "backend": "torch-bf16",
+      "torch": "2.15.0+cpu",
+      "dtype": "torch.bfloat16"
+    },
+    "qant": {
+      "backend": "qant",
+      "toolkit_version": "2.5.0",
+      "driver_info": "cpu-backend;commit:none;",
+      "simulated": true,
+      "device_id": -1,
+      "preloaded_weights": true,
+      "available_npus": [
+        [
+          0,
+          "cpu_backend_0"
+        ],
+        [
+          1,
+          "cpu_backend_1"
+        ],
+        [
+          2,
+          "cpu_backend_2"
+        ],
+        [
+          10,
+          "cpu_backend_gen2p_10"
+        ],
+        [
+          11,
+          "cpu_backend_gen2p_11"
+        ],
+        [
+          12,
+          "cpu_backend_gen2p_12"
+        ]
+      ]
+    }
+  },
+  "rows": [
+    {
+      "model": "logreg",
+      "backend": "torch-fp32",
+      "parameters": 20,
+      "metrics": {
+        "precision": 0.9041394335511983,
+        "recall": 0.9222222222222223,
+        "f1": 0.9130913091309131,
+        "accuracy": 0.9414814814814815,
+        "roc_auc": 0.9871320987654321,
+        "tp": 830,
+        "fp": 88,
+        "fn": 70
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0,
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "decision_flips": 0,
+        "decision_flip_rate": 0.0
+      },
+      "latency": {
+        "batch1_ms": 0.012500000593718141,
+        "full_batch_ms": 0.018200000340584666,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.00674074086688321
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9555555555555556,
+        "legal_form_change": 0.8666666666666667,
+        "random": 1.0,
+        "relocated": 0.7925925925925926,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9466666666666667,
+        "sister": 0.825
+      }
+    },
+    {
+      "model": "logreg",
+      "backend": "torch-bf16",
+      "parameters": 20,
+      "metrics": {
+        "precision": 0.9041394335511983,
+        "recall": 0.9222222222222223,
+        "f1": 0.9130913091309131,
+        "accuracy": 0.9414814814814815,
+        "roc_auc": 0.987149074074074,
+        "tp": 830,
+        "fp": 88,
+        "fn": 70
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0026528717338075423,
+        "max_abs_diff": 0.04827308654785156,
+        "mean_abs_diff": 0.011358027634797273,
+        "decision_flips": 0,
+        "decision_flip_rate": 0.0
+      },
+      "latency": {
+        "batch1_ms": 0.023800001144991256,
+        "full_batch_ms": 0.2776000001176726,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.10281481485839726
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9555555555555556,
+        "legal_form_change": 0.8666666666666667,
+        "random": 1.0,
+        "relocated": 0.7925925925925926,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9466666666666667,
+        "sister": 0.825
+      }
+    },
+    {
+      "model": "logreg",
+      "backend": "qant",
+      "parameters": 20,
+      "metrics": {
+        "precision": 0.9050218340611353,
+        "recall": 0.9211111111111111,
+        "f1": 0.9129955947136563,
+        "accuracy": 0.9414814814814815,
+        "roc_auc": 0.9871774691358025,
+        "tp": 829,
+        "fp": 87,
+        "fn": 71
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0036355237412665532,
+        "max_abs_diff": 0.06503105163574219,
+        "mean_abs_diff": 0.015173340726781774,
+        "decision_flips": 2,
+        "decision_flip_rate": 0.0007407407407407407
+      },
+      "latency": {
+        "batch1_ms": 0.013299999409355223,
+        "full_batch_ms": 0.7283000013558194,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.2697407412428961
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9555555555555556,
+        "legal_form_change": 0.8666666666666667,
+        "random": 1.0,
+        "relocated": 0.7851851851851852,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9466666666666667,
+        "sister": 0.8277777777777777
+      }
+    },
+    {
+      "model": "mlp",
+      "backend": "torch-fp32",
+      "parameters": 1185,
+      "metrics": {
+        "precision": 0.9587513935340022,
+        "recall": 0.9555555555555556,
+        "f1": 0.9571508069003895,
+        "accuracy": 0.9714814814814815,
+        "roc_auc": 0.9957228395061728,
+        "tp": 860,
+        "fp": 37,
+        "fn": 40
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0,
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "decision_flips": 0,
+        "decision_flip_rate": 0.0
+      },
+      "latency": {
+        "batch1_ms": 0.053249999837134965,
+        "full_batch_ms": 0.18460000137565657,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.0683703708798728
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9822222222222222,
+        "legal_form_change": 0.8777777777777778,
+        "random": 1.0,
+        "relocated": 0.8740740740740741,
+        "shared_address": 1.0,
+        "similar_name": 0.9933333333333333,
+        "sister": 0.9055555555555556
+      }
+    },
+    {
+      "model": "mlp",
+      "backend": "torch-bf16",
+      "parameters": 1185,
+      "metrics": {
+        "precision": 0.958659217877095,
+        "recall": 0.9533333333333334,
+        "f1": 0.9559888579387187,
+        "accuracy": 0.9707407407407408,
+        "roc_auc": 0.9957117283950617,
+        "tp": 858,
+        "fp": 37,
+        "fn": 42
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0033971230107774854,
+        "max_abs_diff": 0.07660961151123047,
+        "mean_abs_diff": 0.021928123599953123,
+        "decision_flips": 2,
+        "decision_flip_rate": 0.0007407407407407407
+      },
+      "latency": {
+        "batch1_ms": 0.20814999879803509,
+        "full_batch_ms": 0.7966000011947472,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.29503703747953597
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9807407407407407,
+        "legal_form_change": 0.8666666666666667,
+        "random": 1.0,
+        "relocated": 0.8740740740740741,
+        "shared_address": 1.0,
+        "similar_name": 0.9933333333333333,
+        "sister": 0.9055555555555556
+      }
+    },
+    {
+      "model": "mlp",
+      "backend": "qant",
+      "parameters": 1185,
+      "metrics": {
+        "precision": 0.9575892857142857,
+        "recall": 0.9533333333333334,
+        "f1": 0.9554565701559019,
+        "accuracy": 0.9703703703703703,
+        "roc_auc": 0.9957074074074074,
+        "tp": 858,
+        "fp": 38,
+        "fn": 42
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.004786745718903631,
+        "max_abs_diff": 0.11699962615966797,
+        "mean_abs_diff": 0.030466934001004253,
+        "decision_flips": 3,
+        "decision_flip_rate": 0.0011111111111111111
+      },
+      "latency": {
+        "batch1_ms": 0.03730000025825575,
+        "full_batch_ms": 15.495199997531017,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 5.738962962048525
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9807407407407407,
+        "legal_form_change": 0.8666666666666667,
+        "random": 1.0,
+        "relocated": 0.8740740740740741,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9933333333333333,
+        "sister": 0.9055555555555556
+      }
+    },
+    {
+      "model": "mlp-noise0.05",
+      "backend": "torch-fp32",
+      "parameters": 1185,
+      "metrics": {
+        "precision": 0.9575418994413408,
+        "recall": 0.9522222222222222,
+        "f1": 0.954874651810585,
+        "accuracy": 0.97,
+        "roc_auc": 0.9956537037037037,
+        "tp": 857,
+        "fp": 38,
+        "fn": 43
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0,
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "decision_flips": 0,
+        "decision_flip_rate": 0.0
+      },
+      "latency": {
+        "batch1_ms": 0.041650000639492646,
+        "full_batch_ms": 0.1373999984934926,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.050888888330923185
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9807407407407407,
+        "legal_form_change": 0.8555555555555555,
+        "random": 1.0,
+        "relocated": 0.8740740740740741,
+        "shared_address": 1.0,
+        "similar_name": 0.9911111111111112,
+        "sister": 0.9055555555555556
+      }
+    },
+    {
+      "model": "mlp-noise0.05",
+      "backend": "torch-bf16",
+      "parameters": 1185,
+      "metrics": {
+        "precision": 0.9586129753914989,
+        "recall": 0.9522222222222222,
+        "f1": 0.955406911928651,
+        "accuracy": 0.9703703703703703,
+        "roc_auc": 0.9956466049382716,
+        "tp": 857,
+        "fp": 37,
+        "fn": 43
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0025411518515055164,
+        "max_abs_diff": 0.0727529525756836,
+        "mean_abs_diff": 0.015738551550441317,
+        "decision_flips": 1,
+        "decision_flip_rate": 0.00037037037037037035
+      },
+      "latency": {
+        "batch1_ms": 0.0548999996681232,
+        "full_batch_ms": 0.35549999665818177,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.13166666542895622
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9807407407407407,
+        "legal_form_change": 0.8555555555555555,
+        "random": 1.0,
+        "relocated": 0.8740740740740741,
+        "shared_address": 1.0,
+        "similar_name": 0.9911111111111112,
+        "sister": 0.9083333333333333
+      }
+    },
+    {
+      "model": "mlp-noise0.05",
+      "backend": "qant",
+      "parameters": 1185,
+      "metrics": {
+        "precision": 0.9586129753914989,
+        "recall": 0.9522222222222222,
+        "f1": 0.955406911928651,
+        "accuracy": 0.9703703703703703,
+        "roc_auc": 0.9956462962962963,
+        "tp": 857,
+        "fp": 37,
+        "fn": 43
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.003985409881994214,
+        "max_abs_diff": 0.11485576629638672,
+        "mean_abs_diff": 0.02419323040379418,
+        "decision_flips": 1,
+        "decision_flip_rate": 0.00037037037037037035
+      },
+      "latency": {
+        "batch1_ms": 0.037900001188972965,
+        "full_batch_ms": 15.258200000971556,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 5.651185185545021
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9807407407407407,
+        "legal_form_change": 0.8555555555555555,
+        "random": 1.0,
+        "relocated": 0.8740740740740741,
+        "shared_address": 1.0,
+        "similar_name": 0.9911111111111112,
+        "sister": 0.9083333333333333
+      }
+    },
+    {
+      "model": "fourier",
+      "backend": "torch-fp32",
+      "parameters": 645,
+      "metrics": {
+        "precision": 0.9353448275862069,
+        "recall": 0.9644444444444444,
+        "f1": 0.949671772428884,
+        "accuracy": 0.965925925925926,
+        "roc_auc": 0.9942913580246914,
+        "tp": 868,
+        "fp": 60,
+        "fn": 32
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0,
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "decision_flips": 0,
+        "decision_flip_rate": 0.0
+      },
+      "latency": {
+        "batch1_ms": 0.07885000013629906,
+        "full_batch_ms": 1.0261999996146187,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.38007407393134024
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9851851851851852,
+        "legal_form_change": 0.9111111111111111,
+        "random": 1.0,
+        "relocated": 0.8962962962962963,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9844444444444445,
+        "sister": 0.8555555555555555
+      }
+    },
+    {
+      "model": "fourier",
+      "backend": "torch-bf16",
+      "parameters": 645,
+      "metrics": {
+        "precision": 0.9363538295577131,
+        "recall": 0.9644444444444444,
+        "f1": 0.9501915708812262,
+        "accuracy": 0.9662962962962963,
+        "roc_auc": 0.9942614197530865,
+        "tp": 868,
+        "fp": 59,
+        "fn": 32
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.008857788283303646,
+        "max_abs_diff": 0.21189546585083008,
+        "mean_abs_diff": 0.048366245130697885,
+        "decision_flips": 3,
+        "decision_flip_rate": 0.0011111111111111111
+      },
+      "latency": {
+        "batch1_ms": 0.0853000001370674,
+        "full_batch_ms": 2.627499998197891,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.9731481474807003
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9851851851851852,
+        "legal_form_change": 0.9111111111111111,
+        "random": 1.0,
+        "relocated": 0.8962962962962963,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9866666666666667,
+        "sister": 0.8555555555555555
+      }
+    },
+    {
+      "model": "fourier",
+      "backend": "qant",
+      "parameters": 645,
+      "metrics": {
+        "precision": 0.9374325782092773,
+        "recall": 0.9655555555555555,
+        "f1": 0.9512862616310892,
+        "accuracy": 0.967037037037037,
+        "roc_auc": 0.9942617283950618,
+        "tp": 869,
+        "fp": 58,
+        "fn": 31
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.016085660166701963,
+        "max_abs_diff": 0.35773515701293945,
+        "mean_abs_diff": 0.08685409994588958,
+        "decision_flips": 3,
+        "decision_flip_rate": 0.0011111111111111111
+      },
+      "latency": {
+        "batch1_ms": 0.04040000021632295,
+        "full_batch_ms": 29.1471000018646,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 10.795222222912814
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9866666666666667,
+        "legal_form_change": 0.9111111111111111,
+        "random": 1.0,
+        "relocated": 0.8962962962962963,
+        "shared_address": 0.9968652037617555,
+        "similar_name": 0.9866666666666667,
+        "sister": 0.8583333333333333
+      }
+    },
+    {
+      "model": "fourier-noise0.05",
+      "backend": "torch-fp32",
+      "parameters": 645,
+      "metrics": {
+        "precision": 0.9443838604143948,
+        "recall": 0.9622222222222222,
+        "f1": 0.9532195927352779,
+        "accuracy": 0.9685185185185186,
+        "roc_auc": 0.9940006172839506,
+        "tp": 866,
+        "fp": 51,
+        "fn": 34
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.0,
+        "max_abs_diff": 0.0,
+        "mean_abs_diff": 0.0,
+        "decision_flips": 0,
+        "decision_flip_rate": 0.0
+      },
+      "latency": {
+        "batch1_ms": 0.08005000017874409,
+        "full_batch_ms": 1.218099998368416,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.4511481475438578
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9851851851851852,
+        "legal_form_change": 0.9111111111111111,
+        "random": 1.0,
+        "relocated": 0.8814814814814815,
+        "shared_address": 1.0,
+        "similar_name": 0.9955555555555555,
+        "sister": 0.8638888888888889
+      }
+    },
+    {
+      "model": "fourier-noise0.05",
+      "backend": "torch-bf16",
+      "parameters": 645,
+      "metrics": {
+        "precision": 0.9423913043478261,
+        "recall": 0.9633333333333334,
+        "f1": 0.9527472527472528,
+        "accuracy": 0.9681481481481482,
+        "roc_auc": 0.9939978395061728,
+        "tp": 867,
+        "fp": 53,
+        "fn": 33
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.006614983964919175,
+        "max_abs_diff": 0.16806650161743164,
+        "mean_abs_diff": 0.03535138408342997,
+        "decision_flips": 3,
+        "decision_flip_rate": 0.0011111111111111111
+      },
+      "latency": {
+        "batch1_ms": 0.09215000136464369,
+        "full_batch_ms": 1.9681999983731657,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 0.7289629623604318
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9866666666666667,
+        "legal_form_change": 0.9111111111111111,
+        "random": 1.0,
+        "relocated": 0.8814814814814815,
+        "shared_address": 1.0,
+        "similar_name": 0.9955555555555555,
+        "sister": 0.8583333333333333
+      }
+    },
+    {
+      "model": "fourier-noise0.05",
+      "backend": "qant",
+      "parameters": 645,
+      "metrics": {
+        "precision": 0.9435396308360477,
+        "recall": 0.9655555555555555,
+        "f1": 0.9544206479956068,
+        "accuracy": 0.9692592592592593,
+        "roc_auc": 0.9939413580246914,
+        "tp": 869,
+        "fp": 52,
+        "fn": 31
+      },
+      "agreement_vs_fp32": {
+        "rel_rms_diff": 0.013359447249627699,
+        "max_abs_diff": 0.34206295013427734,
+        "mean_abs_diff": 0.07112607876459758,
+        "decision_flips": 4,
+        "decision_flip_rate": 0.0014814814814814814
+      },
+      "latency": {
+        "batch1_ms": 0.03934999949706253,
+        "full_batch_ms": 22.961400001804577,
+        "full_batch_size": 2700.0,
+        "us_per_pair": 8.504222222890585
+      },
+      "accuracy_by_kind": {
+        "duplicate": 0.9881481481481481,
+        "legal_form_change": 0.9111111111111111,
+        "random": 1.0,
+        "relocated": 0.8888888888888888,
+        "shared_address": 1.0,
+        "similar_name": 0.9955555555555555,
+        "sister": 0.8611111111111112
+      }
+    }
+  ]
+}

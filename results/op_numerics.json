@@ -1,0 +1,140 @@
+{
+  "linear": [
+    {
+      "op": "linear_fprop",
+      "fan_in": 16,
+      "toolkit": {
+        "max_abs_err": 0.008772850036621094,
+        "rel_rms_err": 0.0023422837791491364
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.006852149963378906,
+        "rel_rms_err": 0.0016577333647453014
+      }
+    },
+    {
+      "op": "linear_fprop",
+      "fan_in": 64,
+      "toolkit": {
+        "max_abs_err": 0.0065871961414813995,
+        "rel_rms_err": 0.00235530778420578
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.005856320261955261,
+        "rel_rms_err": 0.001663246657786233
+      }
+    },
+    {
+      "op": "linear_fprop",
+      "fan_in": 256,
+      "toolkit": {
+        "max_abs_err": 0.007270587608218193,
+        "rel_rms_err": 0.002352934782855099
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.007270587608218193,
+        "rel_rms_err": 0.0016422038766248273
+      }
+    },
+    {
+      "op": "linear_fprop",
+      "fan_in": 1024,
+      "toolkit": {
+        "max_abs_err": 0.008187993196770549,
+        "rel_rms_err": 0.002341980588632417
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.007437006803229451,
+        "rel_rms_err": 0.001656682208618502
+      }
+    },
+    {
+      "op": "linear_fprop",
+      "fan_in": 4096,
+      "toolkit": {
+        "max_abs_err": 0.007963671872857958,
+        "rel_rms_err": 0.0023540460988324885
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.007661328127142042,
+        "rel_rms_err": 0.0016589092628299107
+      }
+    }
+  ],
+  "kan": [
+    {
+      "op": "calc_kan_layer_fprop",
+      "fan_in": 4,
+      "terms_per_output": 16,
+      "toolkit": {
+        "max_abs_err": 0.013421935778876515,
+        "rel_rms_err": 0.00652044158004456
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.008669639591378675,
+        "rel_rms_err": 0.0042335933227154645
+      },
+      "emulated_bf16_terms_exact_sum": {
+        "max_abs_err": 0.008728900030596981,
+        "rel_rms_err": 0.0035508746080707373
+      }
+    },
+    {
+      "op": "calc_kan_layer_fprop",
+      "fan_in": 16,
+      "terms_per_output": 64,
+      "toolkit": {
+        "max_abs_err": 0.03783769002558701,
+        "rel_rms_err": 0.011563731626508485
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.010343336250321356,
+        "rel_rms_err": 0.004979387155708136
+      },
+      "emulated_bf16_terms_exact_sum": {
+        "max_abs_err": 0.012587121422045544,
+        "rel_rms_err": 0.0045314798438931235
+      }
+    },
+    {
+      "op": "calc_kan_layer_fprop",
+      "fan_in": 64,
+      "terms_per_output": 256,
+      "toolkit": {
+        "max_abs_err": 0.0794077664835866,
+        "rel_rms_err": 0.01722254322359413
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.013708481943684792,
+        "rel_rms_err": 0.004362215637974174
+      },
+      "emulated_bf16_terms_exact_sum": {
+        "max_abs_err": 0.011421152287300895,
+        "rel_rms_err": 0.003710488375237894
+      }
+    },
+    {
+      "op": "calc_kan_layer_fprop",
+      "fan_in": 256,
+      "terms_per_output": 1024,
+      "toolkit": {
+        "max_abs_err": 0.1869969694182645,
+        "rel_rms_err": 0.03536980122124189
+      },
+      "torch_bf16": {
+        "max_abs_err": 0.015953251889502196,
+        "rel_rms_err": 0.004556294153405709
+      },
+      "emulated_bf16_terms_exact_sum": {
+        "max_abs_err": 0.012539661131278468,
+        "rel_rms_err": 0.004049221656905108
+      }
+    }
+  ],
+  "periodic": {
+    "op": "calc_scaled_periodic_nl_fprop",
+    "points": 4097,
+    "max_abs_err": 0.001945689941732054,
+    "rel_rms_err": 0.0013568439705878503
+  }
+}
