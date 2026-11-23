@@ -50,3 +50,11 @@ scenarios = [
   { name = "vendor-gen2", call_overhead_us = 10.0, bandwidth_gbs = 16.0, npu_ops_per_s = 8e9 },
   { name = "future-10x", call_overhead_us = 2.0, bandwidth_gbs = 32.0, npu_ops_per_s = 8e10 },
 ]
+
+[amd_npu]
+# Experiment D (optional, Windows + AMD Ryzen AI NPU): photonic-poc research --only amd-npu
+models = ["logreg", "mlp-8x8", "mlp-32", "cos-16", "cos-16x8", "kan-4-g2", "kan-8-g8"]
+batch = 256
+latency_batches = [1, 16, 256, 4096]
+calibration_pairs = 2048 # training pairs used to calibrate the A16W8 quantisation
+allow_download = false   # true lets Windows ML install the VitisAI EP system-wide

@@ -23,6 +23,7 @@ and compared with PyTorch.
 | B | Does bf16 execution change decisions? | **Barely.** 0.03–0.06% of MLP decisions and ~0.15% of KAN decisions flip, only within a narrow margin band; calibration and high-precision operating points are unchanged; depth does not matter. |
 | B | Any toolkit defects? | `calc_kan_layer_fprop` **accumulates in bf16**: error grows with fan-in and roughly doubles KAN decision flips. Also: `conv` calls accept `dilation`/`output_padding` values they then reject. |
 | C | Can offloading speed up compact matching models? | **No, by measurement.** The host work a hybrid pipeline keeps on the CPU already costs as much as the whole CPU inference; feature extraction dominates anyway. Break-even needs layers ≳ 1,000–4,000 wide and an NPU sustaining ≳ 0.5 TOPS. |
+| D | Does the cost model hold on a real NPU? | **Yes, on an electronic one** (AMD XDNA 2 in the study laptop, via Windows ML; not Q.ANT hardware). F1 stays within 0.0003 of float32, but each call costs 120–230 µs: compact models are never faster than the CPU; KAN models break even at batches of ≈ 450–3,300. See [docs/amd-npu.md](docs/amd-npu.md). |
 | – | What needs hardware? | Real error and cosine shape, decision stability under analog noise, latency and transfer, energy per inference, drift: five experiments with success criteria in the report (§9). |
 
 ![Quality versus size and compute](results/research/figures/architecture_pareto.png)
@@ -39,7 +40,8 @@ src/photonic_poc/
   stability.py            decision flips, margins, calibration, high-precision thresholds
   statistics.py           Pareto fronts, paired bootstrap
   numpy_forward.py        framework-free CPU baseline
-  experiments/            A: architecture, B: robustness, C: hybrid cost (configs/research.toml)
+  experiments/            A: architecture, B: robustness, C: hybrid cost, D: AMD NPU (configs/research.toml)
+  onnx_export.py, amd_npu.py  ONNX export; AMD Ryzen AI NPU via Windows ML (optional extra)
   private_eval.py         evaluate private models locally; publish only approved aggregates
   figures/                report figures
 examples/                 hybrid inference walkthrough; minimal upstream reproductions
@@ -72,7 +74,11 @@ uv run photonic-poc research                       # experiments A, B, C + figur
 uv run photonic-poc research --only robustness     # one experiment (reuses cached models)
 uv run photonic-poc figures                        # re-render figures from results/research/*.json
 uv run python examples/hybrid_inference.py         # hybrid inference walkthrough
+uv run photonic-poc research --only amd-npu        # Experiment D, Windows + AMD Ryzen AI NPU only
 ```
+
+Experiment D needs the optional extra (`uv sync --extra amd-npu --inexact`) and Windows ML's VitisAI
+execution provider; see [docs/amd-npu.md](docs/amd-npu.md).
 
 Training jobs run single-threaded and are cached under `artifacts/`, so results do not depend on
 the number of workers and re-runs skip finished work. Host timings depend on the machine and its

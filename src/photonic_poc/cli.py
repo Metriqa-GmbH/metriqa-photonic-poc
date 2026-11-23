@@ -119,7 +119,7 @@ def cmd_seed_study(args: argparse.Namespace) -> None:
 
 def cmd_research(args: argparse.Namespace) -> None:
     """Run the research experiments (A, B, C) from a TOML config, then render the figures."""
-    from photonic_poc.experiments import architecture, hybrid_cost, robustness
+    from photonic_poc.experiments import amd_npu, architecture, hybrid_cost, robustness
     from photonic_poc.experiments.config import load_config
     from photonic_poc.figures import render_figures
 
@@ -128,8 +128,9 @@ def cmd_research(args: argparse.Namespace) -> None:
         "architecture": architecture.run,
         "robustness": robustness.run,
         "hybrid": hybrid_cost.run,
+        "amd-npu": amd_npu.run,
     }
-    for name in args.only or list(steps):
+    for name in args.only or [s for s in steps if s != "amd-npu"]:  # amd-npu: opt-in, Windows only
         print(f"== experiment {name}")
         steps[name](cfg, args.out)
     for path in render_figures(args.out, args.out / "figures"):
@@ -221,7 +222,7 @@ def build_parser() -> argparse.ArgumentParser:
     add("report", cmd_report, "render RESULTS.md from the JSON results")
     p = add("research", cmd_research, "run the research experiments (see configs/research.toml)")
     p.add_argument("--config", type=Path, default=Path("configs/research.toml"))
-    p.add_argument("--only", nargs="+", choices=["architecture", "robustness", "hybrid"])
+    p.add_argument("--only", nargs="+", choices=["architecture", "robustness", "hybrid", "amd-npu"])
     p.add_argument("--out", type=Path, default=Path("results/research"))
     p = add("figures", cmd_figures, "render the research figures from results/research")
     p.add_argument("--out", type=Path, default=Path("results/research"))

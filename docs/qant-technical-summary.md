@@ -48,6 +48,8 @@ is synthetic; no hardware was used, and no performance or energy claim is made.
 | H4 | Energy per pair, NPU path vs CPU path | ±10% repeatability |
 | H5 | 8-hour stability across recalibration cycles | ≤ 0.1% decision changes between runs |
 
-The harness runs unchanged with the hardware wheel; the four-week plan is in
+The harness runs unchanged with the hardware wheel. As a dry run of H2/H3 it has already measured a
+real electronic NPU end to end (AMD XDNA 2 via Windows ML): accuracy within 0.0003 F1, 120–230 µs fixed
+cost per call, break-even only for KAN models at large batches. The four-week plan is in
 [pilot-plan.md](pilot-plan.md). Results would be published openly after your review, and the
 toolkit fixes contributed upstream.

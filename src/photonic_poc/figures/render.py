@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from photonic_poc.figures.amd_npu import amd_npu_latency
 from photonic_poc.figures.architecture import architecture_backend, architecture_pareto
 from photonic_poc.figures.hybrid import hybrid_breakdown, hybrid_layers
 from photonic_poc.figures.robustness import robustness_depth, robustness_hardware, robustness_margin
@@ -25,4 +26,7 @@ def render_figures(results: Path, out: Path) -> list[Path]:
         ]
     if hyb:
         paths += [hybrid_breakdown(hyb, out), hybrid_layers(hyb, out)]
+    npu = load_json(results / "amd_npu.json")
+    if npu:
+        paths.append(amd_npu_latency(npu, out))
     return paths

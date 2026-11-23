@@ -1,0 +1,581 @@
+{
+  "hypotheses": "H_D1: A16W8 execution on the NPU keeps test F1 within 0.002 of float32 for every model.\nH_D2: per-call overhead dominates compact models, so the NPU is slower than the CPU at every\nbatch size for them; it can win only where per-pair work is large and batches are large.",
+  "environment": {
+    "processor": "AMD64 Family 26 Model 96 Stepping 0, AuthenticAMD",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "onnxruntime": "1.25.2",
+    "device": "NPU Compute Accelerator Device",
+    "ep_library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.AMD.NPU.EP.Framework.2_2.1000.81.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_vitisai_ep.dll"
+  },
+  "quantization": "QDQ via onnxruntime.quantization: uint16 activations, symmetric int8 weights (A16W8)",
+  "test_pairs": 13500,
+  "models": {
+    "logreg": {
+      "f1_fp32": {
+        "mean": 0.9201818316633281,
+        "std": 0.0005829394077154813
+      },
+      "f1_int_cpu": {
+        "mean": 0.9201916945843465,
+        "std": 0.0006826306088664749
+      },
+      "f1_npu": {
+        "mean": 0.9201916945843465,
+        "std": 0.0006826306088664749
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.009584820549935102,
+        "std": 0.0038858017888327404
+      },
+      "rel_rms_npu": {
+        "mean": 0.009584871679544449,
+        "std": 0.003885840038379303
+      },
+      "flips_int_cpu": {
+        "mean": 21.6,
+        "std": 12.421755109484328
+      },
+      "flips_npu": {
+        "mean": 21.6,
+        "std": 12.421755109484328
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.0003047943115234375,
+        "std": 2.7267414961806864e-06
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 0.0,
+        "std": 0.0
+      },
+      "f1_qant_sim": {
+        "mean": 0.9199797280719482,
+        "std": 0.001048159263360076
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.004754508892074227,
+        "std": 0.0009294504099488631
+      },
+      "flips_qant_sim": {
+        "mean": 10.6,
+        "std": 8.08084154033477
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": true,
+      "placement": {
+        "NPU": 5,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 123.80000043776818,
+          "cpu_fp32_us_per_call": 4.800000169780105,
+          "cpu_int_us_per_call": 7.099999493220821
+        },
+        "16": {
+          "npu_us_per_call": 140.29999874765053,
+          "cpu_fp32_us_per_call": 4.900000931229442,
+          "cpu_int_us_per_call": 7.399998139590025
+        },
+        "256": {
+          "npu_us_per_call": 159.99999959603883,
+          "cpu_fp32_us_per_call": 6.300000677583739,
+          "cpu_int_us_per_call": 10.49999991664663
+        },
+        "4096": {
+          "npu_us_per_call": 210.5999992636498,
+          "cpu_fp32_us_per_call": 31.39999898849055,
+          "cpu_int_us_per_call": 60.40000153006986
+        }
+      }
+    },
+    "mlp-8x8": {
+      "f1_fp32": {
+        "mean": 0.9521277773447316,
+        "std": 0.0014395661204194407
+      },
+      "f1_int_cpu": {
+        "mean": 0.9518986371908811,
+        "std": 0.0014409185874663104
+      },
+      "f1_npu": {
+        "mean": 0.9518986371908811,
+        "std": 0.0014409185874663104
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.012278628535568714,
+        "std": 0.003074497611346935
+      },
+      "rel_rms_npu": {
+        "mean": 0.012278613820672035,
+        "std": 0.003074494242559656
+      },
+      "flips_int_cpu": {
+        "mean": 26.6,
+        "std": 11.436782764396638
+      },
+      "flips_npu": {
+        "mean": 26.6,
+        "std": 11.436782764396638
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.0005148530006408691,
+        "std": 0.0002396153587741724
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 0.0,
+        "std": 0.0
+      },
+      "f1_qant_sim": {
+        "mean": 0.9520457902226465,
+        "std": 0.0014308062600856572
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.004297835798934102,
+        "std": 0.0007306806460006726
+      },
+      "flips_qant_sim": {
+        "mean": 7.8,
+        "std": 2.6832815729997477
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": true,
+      "placement": {
+        "NPU": 15,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 141.19999832473695,
+          "cpu_fp32_us_per_call": 6.100002792663872,
+          "cpu_int_us_per_call": 10.600000678095967
+        },
+        "16": {
+          "npu_us_per_call": 142.90000035543926,
+          "cpu_fp32_us_per_call": 6.399997801054269,
+          "cpu_int_us_per_call": 10.89999932446517
+        },
+        "256": {
+          "npu_us_per_call": 151.1999980721157,
+          "cpu_fp32_us_per_call": 9.800001862458885,
+          "cpu_int_us_per_call": 17.099999240599573
+        },
+        "4096": {
+          "npu_us_per_call": 253.70000003022142,
+          "cpu_fp32_us_per_call": 73.60000017797574,
+          "cpu_int_us_per_call": 116.60000018309802
+        }
+      }
+    },
+    "mlp-32": {
+      "f1_fp32": {
+        "mean": 0.95372434024691,
+        "std": 0.0011228892675280513
+      },
+      "f1_int_cpu": {
+        "mean": 0.9538443516990874,
+        "std": 0.0012852272870356725
+      },
+      "f1_npu": {
+        "mean": 0.9538443516990874,
+        "std": 0.0012852272870356725
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.0074193190783262255,
+        "std": 0.0008505341136868309
+      },
+      "rel_rms_npu": {
+        "mean": 0.007419350184500217,
+        "std": 0.0008505114488687082
+      },
+      "flips_int_cpu": {
+        "mean": 10.2,
+        "std": 1.3038404810405297
+      },
+      "flips_npu": {
+        "mean": 10.2,
+        "std": 1.3038404810405297
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.00041142702102661135,
+        "std": 1.147784901863343e-05
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 0.0,
+        "std": 0.0
+      },
+      "f1_qant_sim": {
+        "mean": 0.9538411776485187,
+        "std": 0.0012279887023527174
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.003514003613963723,
+        "std": 0.0004053591920790874
+      },
+      "flips_qant_sim": {
+        "mean": 3.4,
+        "std": 1.140175425099138
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": true,
+      "placement": {
+        "NPU": 10,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 135.79999904322904,
+          "cpu_fp32_us_per_call": 5.699999746866524,
+          "cpu_int_us_per_call": 8.999999408842996
+        },
+        "16": {
+          "npu_us_per_call": 131.69999874662608,
+          "cpu_fp32_us_per_call": 6.099999154685065,
+          "cpu_int_us_per_call": 9.60000033956021
+        },
+        "256": {
+          "npu_us_per_call": 143.0000011168886,
+          "cpu_fp32_us_per_call": 14.400000509340316,
+          "cpu_int_us_per_call": 21.600000764010474
+        },
+        "4096": {
+          "npu_us_per_call": 228.40000019641593,
+          "cpu_fp32_us_per_call": 88.50000085658394,
+          "cpu_int_us_per_call": 141.79999925545417
+        }
+      }
+    },
+    "cos-16": {
+      "f1_fp32": {
+        "mean": 0.9523372450140052,
+        "std": 0.001340987177754157
+      },
+      "f1_int_cpu": {
+        "mean": 0.9520878398809536,
+        "std": 0.0011913156925608878
+      },
+      "f1_npu": {
+        "mean": 0.9522524130287238,
+        "std": 0.0009765412590145446
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.008036088570952416,
+        "std": 0.0013214140748747853
+      },
+      "rel_rms_npu": {
+        "mean": 0.008518288005143404,
+        "std": 0.001034283209259884
+      },
+      "flips_int_cpu": {
+        "mean": 11.0,
+        "std": 4.301162633521313
+      },
+      "flips_npu": {
+        "mean": 11.2,
+        "std": 3.03315017762062
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.12098531723022461,
+        "std": 0.01028061796566835
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 4.2,
+        "std": 1.3038404810405297
+      },
+      "f1_qant_sim": {
+        "mean": 0.9521521970789288,
+        "std": 0.0011664962714795007
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.0037311045452952385,
+        "std": 0.0001796059176551265
+      },
+      "flips_qant_sim": {
+        "mean": 5.2,
+        "std": 2.5884358211089573
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": false,
+      "placement": {
+        "NPU": 13,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 174.0000006975606,
+          "cpu_fp32_us_per_call": 5.999998393235728,
+          "cpu_int_us_per_call": 9.899998985929415
+        },
+        "16": {
+          "npu_us_per_call": 219.79999837640207,
+          "cpu_fp32_us_per_call": 6.70000008540228,
+          "cpu_int_us_per_call": 15.800000255694613
+        },
+        "256": {
+          "npu_us_per_call": 307.00000206707045,
+          "cpu_fp32_us_per_call": 22.000000171829015,
+          "cpu_int_us_per_call": 24.70000254106708
+        },
+        "4096": {
+          "npu_us_per_call": 312.39999952958897,
+          "cpu_fp32_us_per_call": 136.49999891640618,
+          "cpu_int_us_per_call": 204.30000222404487
+        }
+      }
+    },
+    "cos-16x8": {
+      "f1_fp32": {
+        "mean": 0.9534074253554126,
+        "std": 0.0006763609584846944
+      },
+      "f1_int_cpu": {
+        "mean": 0.9533139708691596,
+        "std": 0.0008503456429565818
+      },
+      "f1_npu": {
+        "mean": 0.9535381039802482,
+        "std": 0.0009429679656496313
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.007924048416316509,
+        "std": 0.0025390387036462584
+      },
+      "rel_rms_npu": {
+        "mean": 0.009370716661214829,
+        "std": 0.003158385982457168
+      },
+      "flips_int_cpu": {
+        "mean": 11.4,
+        "std": 2.701851217221259
+      },
+      "flips_npu": {
+        "mean": 12.6,
+        "std": 4.878524367060187
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.14615066051483155,
+        "std": 0.01789310344280104
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 5.6,
+        "std": 3.0495901363953815
+      },
+      "f1_qant_sim": {
+        "mean": 0.9533714789478107,
+        "std": 0.0006283598725250778
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.004019208764657378,
+        "std": 0.0003849923795091903
+      },
+      "flips_qant_sim": {
+        "mean": 4.4,
+        "std": 1.51657508881031
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": false,
+      "placement": {
+        "NPU": 21,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 221.3000007031951,
+          "cpu_fp32_us_per_call": 6.70000008540228,
+          "cpu_int_us_per_call": 12.399999832268804
+        },
+        "16": {
+          "npu_us_per_call": 207.500001124572,
+          "cpu_fp32_us_per_call": 7.200000254670158,
+          "cpu_int_us_per_call": 13.299999409355223
+        },
+        "256": {
+          "npu_us_per_call": 212.40000023681205,
+          "cpu_fp32_us_per_call": 19.30000144056976,
+          "cpu_int_us_per_call": 30.499999411404133
+        },
+        "4096": {
+          "npu_us_per_call": 407.3999989486765,
+          "cpu_fp32_us_per_call": 198.10000230791047,
+          "cpu_int_us_per_call": 278.9000027405564
+        }
+      }
+    },
+    "kan-4-g2": {
+      "f1_fp32": {
+        "mean": 0.952444412111251,
+        "std": 0.001979379737608638
+      },
+      "f1_int_cpu": {
+        "mean": 0.9523641235649791,
+        "std": 0.0016105461954127843
+      },
+      "f1_npu": {
+        "mean": 0.9522346021543868,
+        "std": 0.0016034286608097457
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.012053037248551845,
+        "std": 0.0021999826778202887
+      },
+      "rel_rms_npu": {
+        "mean": 0.014500241354107856,
+        "std": 0.0021274341357620497
+      },
+      "flips_int_cpu": {
+        "mean": 14.4,
+        "std": 7.231873892705818
+      },
+      "flips_npu": {
+        "mean": 22.4,
+        "std": 5.319774431308154
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.23252686858177185,
+        "std": 0.01833397284012682
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 14.8,
+        "std": 6.534523701081817
+      },
+      "f1_qant_sim": {
+        "mean": 0.9524937774028214,
+        "std": 0.0016987619062337107
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.010208272375166416,
+        "std": 0.00180463455344825
+      },
+      "flips_qant_sim": {
+        "mean": 20.6,
+        "std": 11.991663771137013
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": false,
+      "placement": {
+        "NPU": 26,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 216.25000044878107,
+          "cpu_fp32_us_per_call": 7.400001777568832,
+          "cpu_int_us_per_call": 14.69999915570952
+        },
+        "16": {
+          "npu_us_per_call": 219.899997318862,
+          "cpu_fp32_us_per_call": 9.900002623908222,
+          "cpu_int_us_per_call": 18.40000186348334
+        },
+        "256": {
+          "npu_us_per_call": 329.5999995316379,
+          "cpu_fp32_us_per_call": 58.39999721501954,
+          "cpu_int_us_per_call": 79.4000006862916
+        },
+        "4096": {
+          "npu_us_per_call": 544.9000000226079,
+          "cpu_fp32_us_per_call": 594.599998294143,
+          "cpu_int_us_per_call": 819.4999973056838
+        }
+      }
+    },
+    "kan-8-g8": {
+      "f1_fp32": {
+        "mean": 0.9544560263289087,
+        "std": 0.0020986146076904973
+      },
+      "f1_int_cpu": {
+        "mean": 0.9542798528092982,
+        "std": 0.002416859270254669
+      },
+      "f1_npu": {
+        "mean": 0.9541875291458913,
+        "std": 0.0025607510876765496
+      },
+      "rel_rms_int_cpu": {
+        "mean": 0.014640061557292939,
+        "std": 0.002526792489240971
+      },
+      "rel_rms_npu": {
+        "mean": 0.015442308969795704,
+        "std": 0.002137233355924908
+      },
+      "flips_int_cpu": {
+        "mean": 25.2,
+        "std": 13.881642554107206
+      },
+      "flips_npu": {
+        "mean": 27.6,
+        "std": 15.533834040570923
+      },
+      "npu_vs_int_cpu_max_abs": {
+        "mean": 0.18241314888000487,
+        "std": 0.01640310834323567
+      },
+      "npu_vs_int_cpu_flips": {
+        "mean": 7.2,
+        "std": 2.863564212655271
+      },
+      "f1_qant_sim": {
+        "mean": 0.9542395206867249,
+        "std": 0.0017431881647319
+      },
+      "rel_rms_qant_sim": {
+        "mean": 0.018897145800292493,
+        "std": 0.005397986755698932
+      },
+      "flips_qant_sim": {
+        "mean": 20.0,
+        "std": 11.575836902790225
+      },
+      "seeds": 5,
+      "npu_matches_int_cpu": false,
+      "placement": {
+        "NPU": 26,
+        "VITIS_EP_CPU": 2,
+        "cpu_op_types": [
+          "dequantize-linear"
+        ]
+      },
+      "latency": {
+        "1": {
+          "npu_us_per_call": 228.50000095786527,
+          "cpu_fp32_us_per_call": 8.200000593205914,
+          "cpu_int_us_per_call": 16.30000042496249
+        },
+        "16": {
+          "npu_us_per_call": 236.5000000281725,
+          "cpu_fp32_us_per_call": 21.30000211764127,
+          "cpu_int_us_per_call": 34.09999771974981
+        },
+        "256": {
+          "npu_us_per_call": 305.3999989788281,
+          "cpu_fp32_us_per_call": 212.59999994072132,
+          "cpu_int_us_per_call": 286.39999800361693
+        },
+        "4096": {
+          "npu_us_per_call": 957.1499995217891,
+          "cpu_fp32_us_per_call": 2756.8000004976057,
+          "cpu_int_us_per_call": 3496.7999999935273
+        }
+      }
+    }
+  }
+}

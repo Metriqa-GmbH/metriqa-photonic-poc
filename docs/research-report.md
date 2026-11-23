@@ -13,7 +13,8 @@ this repository · every number below is produced by `photonic-poc research` wit
 
 We built and ran three experiments on a realistic entity-resolution workload (deciding whether two
 company records describe the same company) with the official Q.ANT Native Computing Toolkit and its
-CPU simulator: 352 trained models, 5 seeds each, 13,500 test pairs.
+CPU simulator (352 trained models, 5 seeds each, 13,500 test pairs), plus a real-hardware check of the
+cost model on an electronic NPU.
 
 - **Architecture (Experiment A): no free lunch.** Cosine MLPs and Fourier-KAN networks, which use the
   NPU's native nonlinearity, match ReLU MLPs at every model size but do not beat them (every paired
@@ -36,6 +37,10 @@ CPU simulator: 352 trained models, 5 seeds each, 13,500 test pairs.
   as or more than the whole CPU inference, so even an infinitely fast NPU could not help; feature
   extraction dominates the application anyway. Offloading can pay off only for layers of width
   ≳ 1,000–4,000 and an NPU sustaining ≳ 0.5 TOPS.
+- **Checked on a real (electronic) NPU.** The same models ran on the laptop's AMD XDNA 2 NPU via
+  Windows ML: F1 within 0.0003 of float32, but 120–230 µs fixed cost per call. Compact models are never
+  faster than the CPU at any batch size; KAN models (hundreds of cosines per pair) break even at
+  batches of ≈ 450–3,300. This confirms the cost structure of Experiment C on real silicon.
 - **What only hardware can answer:** real error and `tcos` shape (KAN accuracy is sensitive to it),
   decision stability under analog noise, true latency and transfer costs, energy per inference and
   drift. Five experiments with hypotheses and success criteria are specified (§9); a four-week pilot
@@ -375,6 +380,32 @@ measured.
 
 **Limitations.** Host timings depend on this CPU and on load; the simulator's call overhead is a
 lower bound; scenario parameters are assumptions; the layer study uses synthetic weights.
+
+### 6.4 Real-hardware check on an electronic NPU (Experiment D)
+
+To test the cost structure on real silicon, the trained models also ran on the AMD XDNA 2 NPU of the
+study laptop through Windows ML (A16W8 quantisation, 13,500 test pairs, 5 seeds; details and two
+provider bugs in [amd-npu.md](amd-npu.md)). **This is an electronic NPU, not Q.ANT hardware.**
+
+*H_D1:* NPU execution keeps F1 within 0.002 of float32. **Supported:** within 0.0003 for all seven
+models; decision flips 0.08–0.20% (the bf16 simulator: 0.03–0.15%), with every operator except the
+output dequantisation on the NPU. With cosine activations the NPU's results differ from the same
+quantised model on the CPU by up to 0.23 in logit: the NPU uses its own cosine approximation, a small
+real instance of the `tcos` question.
+
+*H_D2:* per-call overhead dominates compact models. **Supported:** each NPU call costs 120–230 µs
+fixed versus 5–8 µs on the CPU. For logistic regression, MLPs and cosine MLPs the NPU's marginal cost
+per pair (0.02–0.05 µs) is no lower than the CPU's, so no batch size makes it faster (2.1–6.7× slower
+at batch 4,096). Only the KAN models, with hundreds of cosines per pair, have a lower marginal cost on
+the NPU (1.8–3.8×) and break even at batches of ≈ 450 (`kan-8-g8`) and ≈ 3,300 (`kan-4-g2`); at
+batch 4,096 `kan-8-g8` runs 2.9× faster than on the CPU.
+
+![AMD NPU latency](../results/research/figures/amd_npu_latency.png)
+
+This is the §6.3 cost model observed on a real accelerator: offloading pays off only when the
+accelerator's marginal cost per item is below the CPU's and the batch amortises its fixed cost. It
+also shows that the harness measures a real NPU end to end with one command, which is what H1–H3
+need on Q.ANT hardware. One run on a shared machine; power not measured.
 
 ## 7. Private real-world evaluation
 
